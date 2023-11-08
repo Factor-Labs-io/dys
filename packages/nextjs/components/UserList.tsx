@@ -34,7 +34,8 @@ const UserTable: React.FC<UserTableProps> = ({ users }) => {
                         </tr>
                     ))}
                 </tbody>
-            </table></div>
+            </table>
+        </div>
 
     );
 };

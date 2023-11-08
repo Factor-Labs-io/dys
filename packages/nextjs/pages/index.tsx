@@ -45,13 +45,8 @@ const Home: NextPage = () => {
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
-              <p>
-                Explore your local transactions with the{" "}
-                <Link href="/blockexplorer" passHref className="link">
-                  Block Explorer
-                </Link>{" "}
-                tab.
-              </p>
+              <div className="py-4"></div>
+              <button className="btn btn-primary">Docker fetch</button>
             </div>
           </div>
         </div>
