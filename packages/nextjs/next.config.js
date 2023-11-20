@@ -18,12 +18,10 @@ const nextConfig = {
       {
         source: "/upload",
         destination: "https://docjanff.onrender.com/api/upload_video/scaffold_vid.mp4/",
-        
-        // {
-        //   source: "/api/comparedetails/:params*",
-        //   destination:
-        //     "https://pfp-compare-django.onrender.com/api/comparedetails/:params*",
-        // },
+      },
+      {
+        source: "/generate",
+        destination: "https://docjan.varounhanooman4.repl.co/api_call/",
       },
     ];
   },
