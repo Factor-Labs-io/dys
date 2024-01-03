@@ -7,14 +7,29 @@ import VideoPlayer from "~~/components/VideoPlayer";
 import { useState, useEffect } from "react";
 
 const Home: NextPage = () => {
-  const initialVideoSrc = 'https://your-wasabi-bucket-url/your-video.mp4';
+  const initialVideoSrc = 'https://s3.us-east-1.wasabisys.com/dys/generations/final_V12.mp4';
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
 
   useEffect(() => {
-    // Load the saved videoSrc from localStorage when the component mounts
     const savedVideoSrc = localStorage.getItem('videoSrc');
+
+    // Check if the saved videoSrc exists in localStorage and the file exists in the bucket
     if (savedVideoSrc) {
-      setVideoSrc(savedVideoSrc);
+      fetch(savedVideoSrc)
+        .then((response) => {
+          if (response.ok) {
+            setVideoSrc(savedVideoSrc);
+          } else {
+            // Handle the case where the file does not exist
+            console.error('The saved video file does not exist.');
+            setVideoSrc(initialVideoSrc); // Set to the initial value or handle accordingly
+          }
+        })
+        .catch((error) => {
+          console.error('Error checking file existence:', error);
+        });
+    } else {
+      setVideoSrc(initialVideoSrc);
     }
   }, []);
 
@@ -64,9 +79,9 @@ const Home: NextPage = () => {
               <VideoPlayer key={videoSrc} src={videoSrc}/>
             </div>
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
-              <MagnifyingGlassIcon className="h-8 w-8 fill-secondary" />
+              <BugAntIcon className="h-8 w-8 fill-secondary" />
               <div className="py-4"></div>
-              <button onClick={handleUpload} className="btn btn-primary">Docker fetch</button>
+              <button onClick={handleUpload} className="btn btn-primary">Generate</button>
             </div>
           </div>
         </div>
