@@ -40,6 +40,7 @@ const Home: NextPage = () => {
       // Send a POST request with empty JSON data
       const response: AxiosResponse = await axios.post(apiUrl, {});
       const newVideoSrc = response.data["generated_video"];
+      console.log("Video url = ",newVideoSrc)
 
       // Save the new videoSrc to localStorage
       localStorage.setItem('videoSrc', newVideoSrc);
