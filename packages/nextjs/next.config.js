@@ -24,6 +24,10 @@ const nextConfig = {
         destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/api_call",
         // destination: "https://docjan.varounhanooman4.repl.co/api_call/",
       },
+      {
+        source: "/get_files/:path*",
+        destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/get_files/:path*",
+      },
     ];
   },
 };
