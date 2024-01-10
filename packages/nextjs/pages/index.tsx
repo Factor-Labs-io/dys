@@ -10,10 +10,21 @@ import VideoPlayer from "~~/components/VideoPlayer";
 const Home: NextPage = () => {
   const initialVideoSrc = "https://s3.us-east-1.wasabisys.com/dys/generations/final_V12.mp4";
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const handleFileSelectionChange = (selectedFolder: string) => {
     // Handle the selected folder (e.g., you can use it in your API request)
-    console.log("Selected Folder:", selectedFolder);
+    console.log("Selected Items:", selectedFolder);
+
+    // Add the selected folder to the list
+    setSelectedValues(prevValues => [...prevValues, selectedFolder]);
+  };
+
+  const handleUp = async (): Promise<void> => {
+    // Use the selectedValues array to submit to the API
+    console.log("Selected Values:", selectedValues);
+
+    // Rest of your handleUpload logic...
   };
 
   useEffect(() => {
@@ -88,7 +99,7 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <div className="py-4"></div>
-              <button onClick={handleUpload} className="btn btn-primary">
+              <button onClick={handleUp} className="btn btn-primary">
                 Generate
               </button>
             </div>
@@ -103,23 +114,6 @@ const Home: NextPage = () => {
               <FileDropdown label="7_RIGHTLEG" onSelectionChange={handleFileSelectionChange} />
               <FileDropdown label="8_REARTORSO" onSelectionChange={handleFileSelectionChange} />
             </div>
-
-            {/* <div>
-              <label htmlFor="dropdown">Select Pieces:</label>
-              <select id="dropdown" onChange={e => setSelectedFolder(e.target.value)} onBlur={fetchFiles}>
-                <option value="">-- Select Folder --</option>
-                <option value="1_TORSO">TORSO</option>
-              </select>
-
-              <div>
-                <h2>Files in {selectedFolder}:</h2>
-                <ul>
-                  {files.map((file, index) => (
-                    <li key={index}>{file}</li>
-                  ))}
-                </ul>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
