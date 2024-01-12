@@ -12,17 +12,89 @@ const Home: NextPage = () => {
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const handleFileSelectionChange = (selectedFolder: string) => {
-    // Handle the selected folder (e.g., you can use it in your API request)
-    console.log("Selected Items:", selectedFolder);
+  // const handleFileSelectionChange = (label: string, selectedFolder: string) => {
+  //   // Handle the selected folder and label
+  //   console.log("Selected Label:", label);
+  //   console.log("Selected Items:", selectedValues);
+  
+  //   setSelectedValues((prevValues) => {
+  //     // Check if there's already a selected value for the current label
+  //     const index = prevValues.findIndex((value) => value.includes(label));
 
-    // Add the selected folder to the list
-    setSelectedValues(prevValues => [...prevValues, selectedFolder]);
+  //     const keyValue = { [label]: selectedFolder };
+  
+  //     // Update the value for the current label or add a new value
+  //     if (index !== -1) {
+  //       const updatedValues = [...prevValues];
+  //       // updatedValues[index] = `${label}_${selectedFolder}`;
+  //       updatedValues[index] = `${label}:${selectedFolder}`;
+  //       return updatedValues;
+  //     } else {
+  //       // return [...prevValues, `${label}_${selectedFolder}`];
+  //       return [...prevValues, `${label}:${selectedFolder}`];
+  //     }
+  //   });
+  // };
+
+  const handleFileSelectionChange = (label: string, selectedFolder: string) => {
+    setSelectedValues((prevValues) => {
+      // Check if there's already a selected value for the current label
+      const index = prevValues.findIndex((value) => value.includes(label));
+  
+      // Create the attribute object for the current label and selectedFolder
+      const attribute = {
+        trait_type: label,
+        value: selectedFolder,
+      };
+  
+      // Update the value for the current label or add a new value
+      if (index !== -1) {
+        const updatedValues = [...prevValues];
+        updatedValues[index] = JSON.stringify(attribute); // Cast the object to a string
+        return updatedValues;
+      } else {
+        return [...prevValues, JSON.stringify(attribute)]; // Cast the object to a string
+      }
+    });
   };
+  
+
+  // Transform selectedValues to the desired JSON format
+  // const transformedValues = {
+  //   attributes: selectedValues.map((value) => JSON.parse(value)),
+  // };
+
+  
+  
 
   const handleUp = async (): Promise<void> => {
-    // Use the selectedValues array to submit to the API
     console.log("Selected Values:", selectedValues);
+    try {
+      const apiUrl: string = "/generate_specific";
+
+      // Send a POST request with empty JSON data
+      const response: AxiosResponse = await axios.post(apiUrl, {selectedValues});
+      const newVideoSrc = response.data["generated_video"];
+      console.log("Video url = ", newVideoSrc);
+
+      // Save the new videoSrc to localStorage
+      localStorage.setItem("videoSrc", newVideoSrc);
+
+      setVideoSrc(newVideoSrc);
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response) {
+        // The request was made, but the server responded with a status code
+        console.error("Error status:", axiosError.response.status);
+        console.error("Error data:", axiosError.response.data);
+      } else if (axiosError.request) {
+        // The request was made but no response was received
+        console.error("No response received");
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error("Error message:", axiosError.message);
+      }
+    }
 
     // Rest of your handleUpload logic...
   };

@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type FileDropdownProps = {
   label: string;
-  onSelectionChange: (selectedFolder: string) => void;
+  onSelectionChange: (label: string, selectedFolder: string) => void;
 };
 
 const FileDropdown: React.FC<FileDropdownProps> = ({ label, onSelectionChange }) => {
   const [files, setFiles] = useState<string[]>([]);
-  const [selectedFile, setSelectedFile] = useState<string>(''); // Change state variable name
+  const [selectedFile, setSelectedFile] = useState<string>('');
 
   useEffect(() => {
     const fetchFiles = async () => {
@@ -26,9 +26,9 @@ const FileDropdown: React.FC<FileDropdownProps> = ({ label, onSelectionChange })
   }, [label]);
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const file = event.target.value; // Use 'file' instead of 'folder'
+    const file = event.target.value;
     setSelectedFile(file);
-    onSelectionChange(file);
+    onSelectionChange(label, file); // Pass the label along with the selected folder
   };
 
   return (
