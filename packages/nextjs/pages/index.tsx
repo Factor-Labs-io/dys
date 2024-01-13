@@ -6,23 +6,26 @@ import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import FileDropdown from "~~/components/FileDropdown";
 import { MetaHeader } from "~~/components/MetaHeader";
 import VideoPlayer from "~~/components/VideoPlayer";
+import { css } from '@emotion/react';
+import { RingLoader } from 'react-spinners';
 
 const Home: NextPage = () => {
   const initialVideoSrc = "https://s3.us-east-1.wasabisys.com/dys/generations/final_V12.mp4";
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
   // const handleFileSelectionChange = (label: string, selectedFolder: string) => {
   //   // Handle the selected folder and label
   //   console.log("Selected Label:", label);
   //   console.log("Selected Items:", selectedValues);
-  
+
   //   setSelectedValues((prevValues) => {
   //     // Check if there's already a selected value for the current label
   //     const index = prevValues.findIndex((value) => value.includes(label));
 
   //     const keyValue = { [label]: selectedFolder };
-  
+
   //     // Update the value for the current label or add a new value
   //     if (index !== -1) {
   //       const updatedValues = [...prevValues];
@@ -37,16 +40,16 @@ const Home: NextPage = () => {
   // };
 
   const handleFileSelectionChange = (label: string, selectedFolder: string) => {
-    setSelectedValues((prevValues) => {
+    setSelectedValues(prevValues => {
       // Check if there's already a selected value for the current label
-      const index = prevValues.findIndex((value) => value.includes(label));
-  
+      const index = prevValues.findIndex(value => value.includes(label));
+
       // Create the attribute object for the current label and selectedFolder
       const attribute = {
         trait_type: label,
         value: selectedFolder,
       };
-  
+
       // Update the value for the current label or add a new value
       if (index !== -1) {
         const updatedValues = [...prevValues];
@@ -57,15 +60,11 @@ const Home: NextPage = () => {
       }
     });
   };
-  
 
   // Transform selectedValues to the desired JSON format
   // const transformedValues = {
   //   attributes: selectedValues.map((value) => JSON.parse(value)),
   // };
-
-  
-  
 
   const handleUp = async (): Promise<void> => {
     console.log("Selected Values:", selectedValues);
@@ -73,7 +72,8 @@ const Home: NextPage = () => {
       const apiUrl: string = "/generate_specific";
 
       // Send a POST request with empty JSON data
-      const response: AxiosResponse = await axios.post(apiUrl, {selectedValues});
+      setLoading(true);
+      const response: AxiosResponse = await axios.post(apiUrl, { selectedValues });
       const newVideoSrc = response.data["generated_video"];
       console.log("Video url = ", newVideoSrc);
 
@@ -81,6 +81,7 @@ const Home: NextPage = () => {
       localStorage.setItem("videoSrc", newVideoSrc);
 
       setVideoSrc(newVideoSrc);
+      setLoading(false);
     } catch (error) {
       const axiosError = error as AxiosError;
       if (axiosError.response) {
@@ -171,9 +172,15 @@ const Home: NextPage = () => {
             <div className="flex flex-col bg-base-100 px-10 py-10 text-center items-center max-w-xs rounded-3xl">
               <BugAntIcon className="h-8 w-8 fill-secondary" />
               <div className="py-4"></div>
-              <button onClick={handleUp} className="btn btn-primary">
+              <button onClick={handleUp} className="btn btn-primary" disabled={loading}>
                 Generate
               </button>
+              <div className="mb-4"></div>
+              {loading && (
+                <div className="spinner-container">
+                  <RingLoader color="#36D7B7" loading={loading} size={50} />
+                </div>
+              )}
             </div>
 
             <div>
