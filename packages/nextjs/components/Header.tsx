@@ -18,6 +18,10 @@ export const menuLinks: HeaderMenuLink[] = [
     href: "/",
   },
   {
+    label: "Blocktones",
+    href: "/blocktones",
+  },
+  {
     label: "User Home",
     href: "/userlist",
   },

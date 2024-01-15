@@ -33,6 +33,10 @@ const nextConfig = {
         source: "/get_files/:path*",
         destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/get_files/:path*",
       },
+      {
+        source: "/get_folders/:path*",
+        destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/get_folders/:path*",
+      },
     ];
   },
 };

@@ -2,21 +2,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import type { NextPage } from "next";
+import { RingLoader } from "react-spinners";
 import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import FileDropdown from "~~/components/FileDropdown";
 import { MetaHeader } from "~~/components/MetaHeader";
 import VideoPlayer from "~~/components/VideoPlayer";
-import { css } from '@emotion/react';
-import { RingLoader } from 'react-spinners';
 
-const Home: NextPage = () => {
+const BlocktonesPage: NextPage = () => {
   const initialVideoSrc = "https://s3.us-east-1.wasabisys.com/dys/generations/final_V12.mp4";
   const [videoSrc, setVideoSrc] = useState<string>(initialVideoSrc);
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [numberOfFolders, setNumberOfFolders] = useState<number | null>(null);
   const [folderNames, setFolderNames] = useState<string[]>([]);
-  const project = "downsamp"
+  const project = "blocktones_1080";
 
   const handleFileSelectionChange = (label: string, selectedFolder: string) => {
     setSelectedValues(prevValues => {
@@ -100,10 +99,10 @@ const Home: NextPage = () => {
 
         setNumberOfFolders(data.totalFolders); 
         setFolderNames(data.folderNames); 
-        console.log("Number of Folders: ", numberOfFolders)
-        console.log("Names: ", folderNames)
+        console.log("Number of Folders: ", numberOfFolders);
+        console.log("Names: ", folderNames);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     };
 
@@ -141,14 +140,13 @@ const Home: NextPage = () => {
             </div>
 
             <div>
-              <FileDropdown project={project} label="1_TORSO" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="2_LEFTARM" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="3_RIGHTARM" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="4_HEAD" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="5_BELLY" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="6_LEFTLEG" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="7_RIGHTLEG" onSelectionChange={handleFileSelectionChange} />
-              <FileDropdown project={project} label="8_REARTORSO" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="001_STICKER" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="002_CLIP" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="003_TOPCASE" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="004_CD" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="004_CDs_PNGs" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="005_BACKGROUND" onSelectionChange={handleFileSelectionChange} />
+              <FileDropdown project={project} label="006_BACKCASE" onSelectionChange={handleFileSelectionChange} />
             </div>
           </div>
         </div>
@@ -157,4 +155,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default BlocktonesPage;

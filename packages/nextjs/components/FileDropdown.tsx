@@ -2,17 +2,18 @@ import React, { useEffect, useState } from "react";
 
 type FileDropdownProps = {
   label: string;
+  project: string
   onSelectionChange: (label: string, selectedFolder: string) => void;
 };
 
-const FileDropdown: React.FC<FileDropdownProps> = ({ label, onSelectionChange }) => {
+const FileDropdown: React.FC<FileDropdownProps> = ({ label, project, onSelectionChange }) => {
   const [files, setFiles] = useState<string[]>([]);
   const [selectedFile, setSelectedFile] = useState<string>('');
 
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await fetch(`/get_files?search_term=${label}`);
+        const response = await fetch(`/get_files?project=${project}&search_term=${label}`); 
         const data = await response.json();
         setFiles(data.files);
       } catch (error) {
