@@ -92,23 +92,23 @@ const Home: NextPage = () => {
   }, []);
 
   // Test for retrieving folders from repl env
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`/get_folders?search_term=${project}`);
-        const data = await response.json();
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await fetch(`/get_folders?search_term=${project}`);
+  //       const data = await response.json();
 
-        setNumberOfFolders(data.totalFolders); 
-        setFolderNames(data.folderNames); 
-        console.log("Number of Folders: ", numberOfFolders)
-        console.log("Names: ", folderNames)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+  //       setNumberOfFolders(data.totalFolders); 
+  //       setFolderNames(data.folderNames); 
+  //       console.log("Number of Folders: ", numberOfFolders)
+  //       console.log("Names: ", folderNames)
+  //     } catch (error) {
+  //       console.error('Error fetching data:', error);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
     <>
