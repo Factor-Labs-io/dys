@@ -26,7 +26,7 @@ const nextConfig = {
       },
       {
         source: "/generate_specific",
-        destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/api_generate",
+        destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-1fr3xisq48t8v.riker.replit.dev/api_generate",
         // destination: "https://docjan.varounhanooman4.repl.co/api_call/",
       },
       {
@@ -35,7 +35,8 @@ const nextConfig = {
       },
       {
         source: "/get_folders/:path*",
-        destination: "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-2gh41qc5pizqo.hacker.replit.dev/get_folders/:path*",
+        destination:
+          "https://49fd5f7c-0d25-427c-9860-bca614076d07-00-1fr3xisq48t8v.riker.replit.dev/get_folders/:path*",
       },
     ];
   },
